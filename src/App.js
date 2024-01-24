@@ -8,6 +8,7 @@ import Footer from './Footer';
 function App() {
   const [activePrice, setActivePrice] = useState(DEFAULT_ACTIVE_BUTTON);
 
+  
   return (
     <Container>
       <Head activePrice={activePrice} setActivePrice={setActivePrice} />

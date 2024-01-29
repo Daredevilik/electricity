@@ -13,7 +13,7 @@ function App() {
 
   const handleCloseSideBar = () => setShowSideBar(false);
   const handleOpenSideBar = () => setShowSideBar(true);
-
+  
   return (
     <Container>
       <Head activePrice={activePrice} setActivePrice={setActivePrice} handleOpenSideBar={handleOpenSideBar} />

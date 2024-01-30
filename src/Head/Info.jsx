@@ -1,10 +1,18 @@
+import { useEffect, useState } from 'react';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { PRICE_BUTTONS, BADGES } from './constants';
 import Badge from 'react-bootstrap/Badge';
+import { getCurrentPriceData } from '../services/apiService';
 
 function Info({activePrice, setActivePrice}) {
+
+    const [currentPrice, setCurrentPrice] = useState(null);
+
+    useEffect(() => {
+        getCurrentPriceData().then(({ data }) => setCurrentPrice(data.price))
+      }, []);
 
     return (
         <>
@@ -24,7 +32,7 @@ function Info({activePrice, setActivePrice}) {
                 </ButtonGroup>
             </Col>
             <Col className='text-end'>
-                        <h2>XX.XX</h2>
+                        <h2>{currentPrice !== null ? `${currentPrice}` : 'Loading...'}</h2>
                         <div>cent / killowat-hour</div>
             </Col>
         </>

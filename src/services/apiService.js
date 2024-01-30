@@ -13,3 +13,11 @@ export const getPriceData = async () => {
 
     return await response.json();
 };
+
+export const getCurrentPriceData = async () => {
+
+    const currentPriceRecponse = await fetch(`${apiUrl}/nps/price/EE/current`);
+
+    return await currentPriceRecponse.json();
+
+}

@@ -11,7 +11,7 @@ function Info({activePrice, setActivePrice}) {
     const [currentPrice, setCurrentPrice] = useState(null);
 
     useEffect(() => {
-        getCurrentPriceData().then(({ data }) => setCurrentPrice(data.price))
+        getCurrentPriceData().then(({ data }) => setCurrentPrice(data[0] && data[0].price))
       }, []);
 
     return (

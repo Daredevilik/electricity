@@ -3,6 +3,7 @@ import Col from 'react-bootstrap/Col'
 import Intervals from './Intervals'
 
 function TargetLow(props) {
+
     return (
         <>
             <Row>
@@ -14,7 +15,9 @@ function TargetLow(props) {
                 </Col>
             </Row>
             <Row>
-                <Col></Col>
+                <Col>
+                    
+                </Col>
             </Row>
         </>
     );

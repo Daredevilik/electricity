@@ -6,19 +6,24 @@ import { PRICE_BUTTONS, BADGES } from './constants';
 import Badge from 'react-bootstrap/Badge';
 import { getCurrentPrice } from '../services/apiService';
 import { mwToKw, addTax } from '../utils/priceFormats';
+import { ERROR_MESSAGE } from './constants';
 
-function Info({activePrice, setActivePrice}) {
+function Info({ activePrice, setActivePrice, setErrorMessage }) {
     const [currentPrice, setCurrectPrice] = useState(0);
 
     useEffect(() => {
-        (async() => {
-            const { data } = await getCurrentPrice();
+        (async () => {
+            try {
+                const { data, success } = await getCurrentPrice();
 
-            setCurrectPrice(addTax(mwToKw(data[0].price), "ee"));
+                if (!success) throw new Error();
 
-        })()
-
-    }, []);
+                setCurrectPrice(addTax(mwToKw(data[0].price), "ee"));
+            } catch {
+                setErrorMessage(ERROR_MESSAGE);
+            }
+        })();
+    }, [setErrorMessage]);
 
     return (
         <>
@@ -38,8 +43,8 @@ function Info({activePrice, setActivePrice}) {
                 </ButtonGroup>
             </Col>
             <Col className='text-end'>
-                        <h2>{currentPrice}</h2>
-                        <div>cent / killowat-hour</div>
+                <h2>{currentPrice}</h2>
+                <div>cent / killowat-hour</div>
             </Col>
         </>
     );

@@ -1,55 +1,23 @@
-import { useState } from 'react';
-import './App.scss';
-import Container from 'react-bootstrap/Container';
-import Head, { DEFAULT_ACTIVE_BUTTON } from './Head';
-import Body from './Body';
-import Footer from './Footer';
-import LeftSideBar from './LeftSideBar';
-import { getDefaultFrom, getDefaultUntil } from './utils/dates';
-import ErrorModal from './ErrorModal';
+import { Routes, Route } from "react-router-dom";
+import ElecticPrice from "./ElectricPrice";
+import About from "./About";
+import Navigation from "./Navigation";
 
 function App() {
-  const [activePrice, setActivePrice] = useState(DEFAULT_ACTIVE_BUTTON);
-  const [activeHour, setActiveHour] = useState(1);
-  const [showSideBar, setShowSideBar] = useState(false);
-  const [from, setFrom] = useState(getDefaultFrom());
-  const [until, setUntil] = useState(getDefaultUntil());
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [bestUntil, setBestUntil] = useState(0);
-
-  const handleCloseSideBar = () => setShowSideBar(false);
-  const handleOpenSideBar = () => setShowSideBar(true);
-
   return (
-    <Container>
-      <Head
-        activePrice={activePrice}
-        setActivePrice={setActivePrice}
-        handleOpenSideBar={handleOpenSideBar}
-        setErrorMessage={setErrorMessage} />
-      <Body
-        activeHour={activeHour}
-        from={from}
-        until={until}
-        setErrorMessage={setErrorMessage}
-        setBestUntil={setBestUntil} />
-      <Footer
-        activePrice={activePrice}
-        activeHour={activeHour}
-        setActiveHour={setActiveHour}
-        bestUntil = {bestUntil} />
-      <LeftSideBar show={showSideBar}
-        handleClose={handleCloseSideBar}
-        from={from} until={until}
-        setFrom={setFrom}
-        setUntil={setUntil}
-      />
-      <ErrorModal
-        show={!!errorMessage}
-        handleClose={() => setErrorMessage(null)}
-        errorMessage={errorMessage}
-      />
-    </Container>
+    <>
+      <Navigation />
+      <Routes>
+        <Route path="/" element={<ElecticPrice />}>
+          <Route path="lowprice/:hours" element={<ElecticPrice />} />
+        </Route>
+        <Route path="/about" element={<About />}>
+          <Route path=":id" element={<About />} />
+          <Route path=":id/:name" element={<About />} />
+        </Route>
+        <Route path="*" element={<h1>404</h1>} />
+      </Routes>
+    </>
   );
 }
 

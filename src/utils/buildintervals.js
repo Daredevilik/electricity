@@ -1,4 +1,4 @@
-import { currentTimeStamp } from '../utils/dates';
+import { currentTimeStamp } from './dates';
 // import lodash from "lodash";
 
 export const removePast = (data) => {

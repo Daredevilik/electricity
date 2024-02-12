@@ -3,8 +3,12 @@ import Col from 'react-bootstrap/Col'
 import { INTERVALS } from './constants';
 import Stack from 'react-bootstrap/Stack';
 import Button from 'react-bootstrap/Button';
+import { useDispatch, useSelector } from 'react-redux';
+import { setActiveHour } from '../services/stateService';
 
-function Intervals({ activeHour, setActiveHour }) {
+function Intervals() {
+    const dispatch = useDispatch();
+    const activeHour = useSelector((state) => state.main.activeHour);
     return (
         <Row>
             <Col>
@@ -13,7 +17,7 @@ function Intervals({ activeHour, setActiveHour }) {
                         <Button
                             key={id}
                             active={(activeHour || 1) === id}
-                            onClick={() => setActiveHour(id)}
+                            onClick={() => dispatch(setActiveHour(id))}
                             variant='outline-warning'>{name}
                         </Button>
                     ))}

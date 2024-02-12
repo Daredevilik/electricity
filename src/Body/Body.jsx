@@ -11,8 +11,8 @@ import {
   Dot,
   ResponsiveContainer,
   ReferenceArea,
-  ReferenceLine,
-} from "recharts";
+  ReferenceLine, 
+} from "recharts"; 
 import { getPriceData } from "../services/apiService";
 import { chartDataConvertor } from "../utils";
 import { currentTimeStamp } from "../utils/dates";
@@ -20,11 +20,9 @@ import { getLowPriceInterval } from "../utils/buildIntervals";
 import { getAvaregePrice } from "../utils/maths";
 import lodash from "lodash";
 import { ERROR_MESSAGE } from "./constants";
+import { useSelector } from "react-redux";
 
 function Body({
-  from,
-  until,
-  activeHour,
   setErrorMessage,
   setBestUntil,
   setIsLoading,
@@ -32,6 +30,10 @@ function Body({
   const [priceData, setPriceData] = useState([]);
   const [x1, setX1] = useState(0);
   const [x2, setX2] = useState(0);
+
+  const activeHour = useSelector((state) => state.main.activeHour);
+  const from = useSelector((state) => state.date.from);
+  const until = useSelector((state) => state.date.until);
 
   const averagePrice = useMemo(() => {
     return getAvaregePrice(priceData);

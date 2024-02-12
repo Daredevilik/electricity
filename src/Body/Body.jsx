@@ -17,7 +17,7 @@ import { getPriceData } from "../services/apiService";
 import { chartDataConvertor } from "../utils";
 import { currentTimeStamp } from "../utils/dates";
 import { getLowPriceInterval } from "../utils/buildIntervals";
-import { getAveragePrice } from "../utils/maths";
+import { getAvaregePrice } from "../utils/maths";
 import lodash from "lodash";
 import { ERROR_MESSAGE } from "./constants";
 
@@ -34,7 +34,7 @@ function Body({
   const [x2, setX2] = useState(0);
 
   const averagePrice = useMemo(() => {
-    return getAveragePrice(priceData);
+    return getAvaregePrice(priceData);
   }, [priceData]);
 
   const renderDot = useCallback((line) => {

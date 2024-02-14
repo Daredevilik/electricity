@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/electricity/static/css/main.b78446a0.css",
+    "main.js": "/electricity/static/js/main.2ce6dfcc.js",
+    "index.html": "/electricity/index.html",
+    "main.b78446a0.css.map": "/electricity/static/css/main.b78446a0.css.map",
+    "main.2ce6dfcc.js.map": "/electricity/static/js/main.2ce6dfcc.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b78446a0.css",
+    "static/js/main.2ce6dfcc.js"
+  ]
+}

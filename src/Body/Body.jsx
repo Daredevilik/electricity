@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useCallback } from "react";
+import { useEffect, useState, useCallback, useContext } from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {
@@ -11,8 +11,8 @@ import {
   Dot,
   ResponsiveContainer,
   ReferenceArea,
-  ReferenceLine, 
-} from "recharts"; 
+  ReferenceLine,
+} from "recharts";
 import { getPriceData } from "../services/apiService";
 import { chartDataConvertor } from "../utils";
 import { currentTimeStamp } from "../utils/dates";
@@ -22,6 +22,7 @@ import lodash from "lodash";
 import { ERROR_MESSAGE } from "./constants";
 import { useDispatch, useSelector } from "react-redux";
 import { setErrorMessage, setBestUntil, setIsLoading } from "../services/stateService";
+import { ElecticPriceContext } from "../contexts/ElectricPriceContext";
 
 function Body() {
   const dispatch = useDispatch();
@@ -29,13 +30,11 @@ function Body() {
   const [x1, setX1] = useState(0);
   const [x2, setX2] = useState(0);
 
+  const { actions, values } = useContext(ElecticPriceContext)
+
   const activeHour = useSelector((state) => state.main.activeHour);
   const from = useSelector((state) => state.date.from);
   const until = useSelector((state) => state.date.until);
-
-  const averagePrice = useMemo(() => {
-    return getAvaregePrice(priceData);
-  }, [priceData]);
 
   const renderDot = useCallback((line) => {
     const {
@@ -57,10 +56,13 @@ function Body() {
         const priceData = chartDataConvertor(data.ee);
 
         setPriceData(priceData);
+
+        actions.setAveragePrice(getAvaregePrice(priceData));
+        
       })
       .catch(() => dispatch(setErrorMessage(ERROR_MESSAGE)))
       .finally(() => dispatch(setIsLoading(false)));
-  }, [from, until, dispatch]);
+  }, [from, until, dispatch, actions]);
 
   useEffect(() => {
     const lowPriceIntervals = getLowPriceInterval(priceData, activeHour);
@@ -88,7 +90,7 @@ function Body() {
               dot={renderDot}
             />
             <ReferenceArea x1={x1} x2={x2} stroke="red" strokeOpacity={0.3} />
-            <ReferenceLine y={averagePrice} label="Average" stroke="grey" />
+            <ReferenceLine y={values.averagePrice} label="Average" stroke="grey" />
           </LineChart>
         </ResponsiveContainer>
       </Col>

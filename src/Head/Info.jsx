@@ -34,11 +34,13 @@ function Info() {
         })();
     }, [dispatch]);
 
+    const badgeIndex = currentPrice > 10 ? 1 : 0;
+
     return (
         <>
             <Col>
                 <div>The current price of electricity is</div>
-                <Badge bg={BADGES[0].name}>{BADGES[0].id}</Badge>
+                <Badge bg={BADGES[badgeIndex].name}>{BADGES[badgeIndex].id}</Badge>
             </Col>
             <Col>
                 <ButtonGroup>

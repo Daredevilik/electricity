@@ -14,7 +14,7 @@ import { ElecticPriceContext } from '../contexts/ElectricPriceContext';
 function Info() {
     const dispatch = useDispatch();
 
-    const {values, actions} = useContext(ElecticPriceContext);
+    const {values, actions: {setCurrectPrice}} = useContext(ElecticPriceContext);
     const activePrice = useSelector((state) => state.main.activePrice);
 
     useEffect(() => {
@@ -24,12 +24,12 @@ function Info() {
 
                 if (!success) throw new Error();
 
-                actions.setCurrectPrice(addTax(mwToKw(data[0].price), "ee"));
+                setCurrectPrice(addTax(mwToKw(data[0].price), "ee"));
             } catch {
                 dispatch(setErrorMessage(ERROR_MESSAGE));
             }
         })();
-    }, [dispatch, actions]);
+    }, [dispatch, setCurrectPrice]);
 
     // const badgeIndex = currentPrice > values.averagePrice ? 1 : 0;
 

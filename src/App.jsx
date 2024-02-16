@@ -8,10 +8,10 @@ function App() {
     <>
       <Navigation />
       <Routes>
-        <Route path="/electricity" element={<ElecticPrice />}>
+        <Route path="/" element={<ElecticPrice />}>
           <Route path="lowprice/:hours" element={<ElecticPrice />} />
         </Route>
-        <Route path="/electricity/about" element={<About />}>
+        <Route path="/about" element={<About />}>
           <Route path="me" element={<About />} />
           <Route path="gamma" element={<About />} />
         </Route>

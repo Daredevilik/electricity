@@ -1,23 +1,20 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import { PRICE_BUTTONS, BADGES } from './constants';
-import Badge from 'react-bootstrap/Badge';
+import { PRICE_BUTTONS } from './constants';
 import { getCurrentPrice } from '../services/apiService';
 import { mwToKw, addTax } from '../utils/priceFormats';
 import { ERROR_MESSAGE } from './constants';
 import { useSelector, useDispatch } from 'react-redux';
 import { setActivePrice, setErrorMessage } from '../services/stateService';
+import BadgePrice from './BadgePrice';
 import { ElecticPriceContext } from '../contexts/ElectricPriceContext';
 
 function Info() {
     const dispatch = useDispatch();
 
-    const { values } = useContext(ElecticPriceContext);
-    console.log('values.averagePrice', values.averagePrice);
-
-    const [currentPrice, setCurrectPrice] = useState(0);
+    const {values, actions} = useContext(ElecticPriceContext);
     const activePrice = useSelector((state) => state.main.activePrice);
 
     useEffect(() => {
@@ -27,20 +24,20 @@ function Info() {
 
                 if (!success) throw new Error();
 
-                setCurrectPrice(addTax(mwToKw(data[0].price), "ee"));
+                actions.setCurrectPrice(addTax(mwToKw(data[0].price), "ee"));
             } catch {
                 dispatch(setErrorMessage(ERROR_MESSAGE));
             }
         })();
-    }, [dispatch]);
+    }, [dispatch, actions]);
 
-    const badgeIndex = currentPrice > 10 ? 1 : 0;
+    // const badgeIndex = currentPrice > values.averagePrice ? 1 : 0;
 
     return (
         <>
             <Col>
                 <div>The current price of electricity is</div>
-                <Badge bg={BADGES[badgeIndex].name}>{BADGES[badgeIndex].id}</Badge>
+                <BadgePrice {...values} />
             </Col>
             <Col>
                 <ButtonGroup>
@@ -54,7 +51,7 @@ function Info() {
                 </ButtonGroup>
             </Col>
             <Col className='text-end'>
-                <h2>{currentPrice}</h2>
+                <h2>{values.currentPrice}</h2>
                 <div>cent / killowat-hour</div>
             </Col>
         </>

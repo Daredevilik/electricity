@@ -11,4 +11,6 @@ function BadgePrice({ averagePrice, currentPrice }) {
         return (<Badge bg={BADGES[2].name}>{BADGES[2].id}</Badge>);
 }
 
+// added 
+
 export default BadgePrice;
